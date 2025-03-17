@@ -193,7 +193,7 @@ static ssize_t device_read(struct file *file, char __user *buf, size_t count, lo
 
     mutex_lock(&circ_mutex);
     while (bytes_copied < count && tail != head) {
-        if (copy_to_user(buf + bytes_copied, &circ_buffer[tail], 1)) // this is what copies to user space, Ciaran - Ryan  {
+        if (copy_to_user(buf + bytes_copied, &circ_buffer[tail], 1)){ // this is what copies to user space, Ciaran - Ryan  {
             mutex_unlock(&circ_mutex);
             return -EFAULT; // error code for "Bad Address"
             /*
