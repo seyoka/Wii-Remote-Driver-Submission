@@ -35,7 +35,7 @@ void page_up() {
 }
 
 void page_down(){
-    sytem("xdotool key Page_Down");
+    system("xdotool key Page_Down");
     usleep(200000);
 }
 
