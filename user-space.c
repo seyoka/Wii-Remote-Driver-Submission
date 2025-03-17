@@ -9,6 +9,9 @@
 #define DEVICE_PATH "/dev/wii_remote"
 #define MAX_READ_SIZE 256
 
+#define WIIMOTE_IOCTL_REQUEST_STATUS _IO('W', 1)
+
+
 // Function to simulate mouse movement using xdotool
 void send_mouse_move(int x, int y) {
     char command[100];
@@ -35,6 +38,15 @@ void page_down(){
     sytem("xdotool key Page_Down");
     usleep(200000);
 }
+
+void IOCTL_request(int fd){
+    if (ioctl(fd, WIIMOTE_IOCTL_REQUEST_STATUS) == -1) {
+        perror("IOCTL request failed");
+    } else {
+        printf("Battery/status request sent successfully.\n");
+    }
+}
+
 int main() {
     int fd = open(DEVICE_PATH, O_RDONLY); // O_RDONLY flag that tells system to opwn in readonly mode
     if (fd == -1) {
@@ -43,7 +55,7 @@ int main() {
     }
 
 
-    printf("Key:\nDpad: move \nA: Left Click \nB: Right Click \n1: Page Up \n2: Page Down \n+: Dpi Up \n-: Dpi Down\n\nReading Wii Remote input...\n");
+    printf("Key:\nDpad: move \nA: Left Click \nB: Right Click \n1: Page Up \n2: Page Down \n+: Dpi Up \n-: Dpi Down\nHome: IOCTL Request \n\nReading Wii Remote input...\n");
 
     char buffer[MAX_READ_SIZE];
     int x_pos = 0, y_pos = 0;
@@ -94,6 +106,9 @@ int main() {
         }else if(strstr(buffer, "Minus")){
             printf("Minus pressed");
             move_step -= 5;
+        }else if(strstr(buffer, "Home")){
+            printf("Home pressed");
+            IOCTL_request(fd);
         }
         send_mouse_move(x_pos,y_pos);
 
