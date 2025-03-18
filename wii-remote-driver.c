@@ -88,8 +88,8 @@ static void circ_buffer_write(const char *data, size_t len)
  *            Bit 2: D-pad Down
  *            Bit 3: D-pad Up
  *            Bit 4: Plus Button
- *            Bit 7: Home Button    ( idk why Home is found by Byte 2 for the code below it just works ) - Ciaran
-                                    Yeah its cooked at times I wont lie - Ryan
+ *            Bit 7: Home Button     idk why Home is found by Byte 2 for the code below it just works - Ciaran
+ *                                   Yeah its cooked at times I wont lie - Ryan
  *
  *   Byte 2: Action buttons:
  *            Bit 0: A Button
